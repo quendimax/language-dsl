@@ -1,2 +1,2 @@
-# linguage-dsl
-The Atom package for lingvo dsl syntax highlighting.
+# language-dsl
+The Atom package adds support of Lingvo DSL language.
