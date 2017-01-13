@@ -1,0 +1,17 @@
+{
+  "name": "language-dsl",
+  "version": "0.0.0",
+  "description": "Lingvo DSL language support in Atom",
+  "engines": {
+    "atom": "*"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "bugs": {
+    "url": ""
+  },
+  "license": "GPL"
+}

@@ -1,0 +1,63 @@
+'scopeName': 'source.dsl'
+'name': 'Lingvo DSL'
+'fileTypes': ['dsl']
+'patterns': [
+  {
+    # 'name': 'entity.name.tag.dsl'
+    'begin': '\\[/?\\w+'
+    'beginCaptures':
+      '0':
+        'name': 'entity.name.tag.dsl'
+    'end': '\\]'
+    'endCaptures':
+      '0':
+        'name': 'entity.name.tag.dsl'
+    'patterns': [
+      {
+        'include': '#attribute'
+      }
+      {
+        'include': '#string'
+      }
+    ]
+  }
+  {
+    'begin': '\\{\\{'
+    'end': '\\}\\}'
+    'name': 'comment.block.dsl'
+  }
+  {
+    'match': '^[^\\s#]+'
+    'name': 'markup.bold.dsl'
+  }
+  {
+    'begin': '^\\s*#(NAME|INDEX_LANGUAGE|CONTENTS_LANGUAGE|INCLUDE)'
+    'beginCaptures':
+      '0':
+        'name': 'keyword.other.dsl'
+    'end': '$'
+    'patterns': [
+      {
+        'include': '#string'
+      }
+    ]
+  }
+]
+'repository':
+  'string':
+    'begin': '"'
+    'beginCaptures':
+      '0':
+        'name': 'punctuation.definition.string.begin.dsl'
+    'end': '"'
+    'endCaptures':
+      '0':
+        'name': 'punctuation.definition.string.end.dsl'
+    'name': 'string.quoted.double.dsl'
+  'attribute':
+    'match': '\\s+(\\w+)(=)'
+    'captures':
+      '1':
+        'name': 'entity.other.attribute-name.dsl'
+      '2':
+        'name': 'punctuation.definition.tag.dsl'
