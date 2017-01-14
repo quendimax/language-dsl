@@ -20,6 +20,9 @@ patterns: [
   {
     include: '#tag'
   }
+  # {
+  #   include: '#invalidTag'
+  # }
 ]
 
 repository:
@@ -134,14 +137,34 @@ repository:
     name: 'comment.block.dsl'
 
   tag:
-    begin: '\\[/?\\w+'
+    begin: '(\\[)\\s*(/?(b|i|u|c|\\*|m\\d?|trn|ex|com|s|url|!trs|p|\'|lang|ref|@|sub|sup|t|br))'
     beginCaptures:
-      '0':
+      '1':
+        name: 'entity.name.tag.dsl'
+      '2':
         name: 'entity.name.tag.dsl'
     end: '\\]'
     endCaptures:
       '0':
         name: 'entity.name.tag.dsl'
+    patterns: [
+      {
+        include: '#attribute'
+      }
+      {
+        include: '#string'
+      }
+    ]
+
+  invalidTag:
+    begin: '\\[\\s*/?\\w+'
+    beginCaptures:
+      '0':
+        name: 'invalid.illegal.dsl'
+    end: '\\'
+    endCaptures:
+      '0':
+        name: 'invalid.illegal.dsl'
     patterns: [
       {
         include: '#attribute'
