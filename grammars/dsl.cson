@@ -1,85 +1,152 @@
-'scopeName': 'text.dsl'
-'name': 'Lingvo DSL'
-'fileTypes': ['dsl']
-'patterns': [
+scopeName: 'text.dsl'
+name: 'Lingvo DSL'
+fileTypes: ['dsl']
+patterns: [
   {
-    'include': '#comment'
+    match: '^[\\ \\t]*$'
   }
   {
-    'include': '#index'
+    include: '#macro'
   }
   {
-    'include': '#macro'
+    include: '#comment'
   }
   {
-    'include': '#tag'
+    include: '#index'
+  }
+  {
+    include: '#escape'
+  }
+  {
+    include: '#tag'
   }
 ]
 
-'repository':
-  'string':
-    'begin': '"'
-    'beginCaptures':
+repository:
+
+  macro:
+    begin: '^#(NAME|INDEX_LANGUAGE|CONTENTS_LANGUAGE|INCLUDE|SOURCE_CODE_PAGE)'
+    beginCaptures:
       '0':
-        'name': 'punctuation.definition.string.begin.dsl'
-    'end': '"'
-    'endCaptures':
-      '0':
-        'name': 'punctuation.definition.string.end.dsl'
-    'name': 'string.quoted.double.dsl'
-    'patterns': [
+        name: 'keyword.other.dsl'
+    end: '$'
+    patterns: [
       {
-        'include': '#escape'
+        include: '#string'
       }
     ]
 
-  'escape':
-    'match': '(\\[|\\])'
-    'name': 'constant.character.escape.dsl'
+  index:
+    patterns: [
+      {
+        include: '#escapeAndIndex'
+      }
+      {
+        include: '#justIndex'
+      }
+      {
+        include: '#subIndex'
+      }
+    ]
 
-  'attribute':
-    'match': '\\s+(\\w+)(=)'
+  justIndex:
+    begin: '^[^\\ \\t]'
+    end: '$'
+    name: 'markup.bold.dsl'
+    patterns: [
+      {
+        include: '#comment'
+      }
+      {
+        include: '#escape'
+      }
+    ]
+
+  escapeAndIndex:
+    begin: '^\\\\.'
+    beginCaptures:
+      '0':
+        name: 'constant.character.escape.dsl'
+    end: '$'
+    name: 'markup.bold.dsl'
+    patterns: [
+      {
+        include: '#comment'
+      }
+      {
+        include: '#escape'
+      }
+    ]
+
+  subIndex:
+    begin: '^[\\ \\t]+(@)'
+    beginCaptures:
+      '1':
+        name: 'keyword.other.dsl'
+    end: '$'
+    name: 'markup.bold.dsl'
+    patterns: [
+      {
+        include: '#comment'
+      }
+      {
+        include: '#escape'
+      }
+    ]
+
+  string:
+    begin: '"'
+    beginCaptures:
+      '0':
+        name: 'punctuation.definition.string.begin.dsl'
+    end: '"'
+    endCaptures:
+      '0':
+        name: 'punctuation.definition.string.end.dsl'
+    name: 'string.quoted.double.dsl'
+    patterns: [
+      {
+        include: '#escape'
+      }
+    ]
+
+  escape:
+    match: '(\\\\.|\\[\\[|\\]\\])'
+    name: 'constant.character.escape.dsl'
+
+  attribute:
+    match: '\\s+(\\w+)(=)'
     'captures':
       '1':
-        'name': 'entity.other.attribute-name.dsl'
+        name: 'entity.other.attribute-name.dsl'
       '2':
-        'name': 'punctuation.definition.tag.dsl'
+        name: 'punctuation.definition.tag.dsl'
 
-  'macro':
-    'begin': '^\\s*#(NAME|INDEX_LANGUAGE|CONTENTS_LANGUAGE|INCLUDE)'
-    'beginCaptures':
+  comment:
+    begin: '\\{\\{'
+    beginCaptures:
       '0':
-        'name': 'keyword.other.dsl'
-    'end': '$'
-    'patterns': [
+        name: 'punctuation.definition.comment.begin.dsl'
+    end: '\\}\\}'
+    endCaptures:
+      '0':
+        name: 'punctuation.definition.comment.end.dsl'
+    name: 'comment.block.dsl'
+
+  tag:
+    begin: '\\[/?\\w+'
+    beginCaptures:
+      '0':
+        name: 'entity.name.tag.dsl'
+    end: '\\]'
+    endCaptures:
+      '0':
+        name: 'entity.name.tag.dsl'
+    patterns: [
       {
-        'include': '#string'
-      }
-    ]
-
-  'comment':
-    'begin': '\\{\\{'
-    'end': '\\}\\}'
-    'name': 'comment.block.dsl'
-
-  'index':
-    'match': '^[^\\s#]+'
-    'name': 'markup.bold.dsl'
-
-  'tag':
-    'begin': '\\[/?\\w+'
-    'beginCaptures':
-      '0':
-        'name': 'entity.name.tag.dsl'
-    'end': '\\]'
-    'endCaptures':
-      '0':
-        'name': 'entity.name.tag.dsl'
-    'patterns': [
-      {
-        'include': '#attribute'
+        include: '#attribute'
       }
       {
-        'include': '#string'
+        include: '#string'
       }
     ]
