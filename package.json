@@ -1,6 +1,6 @@
 {
   "name": "language-dsl",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Lingvo DSL language support in Atom",
   "engines": {
     "atom": "*"
