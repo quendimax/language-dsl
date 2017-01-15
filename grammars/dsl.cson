@@ -23,6 +23,9 @@ patterns: [
   {
     include: '#references'
   }
+  {
+    include: '#tilde'
+  }
 ]
 
 repository:
@@ -256,3 +259,7 @@ repository:
         include: '#comments'
       }
     ]
+
+  tilde:
+    match: '~'
+    name: 'keyword.other.dsl'

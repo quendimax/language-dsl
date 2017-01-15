@@ -35,6 +35,7 @@ bye
   [*][m1][/m]
 
 tags
+  [m1]~ article[/m]
   [m1]hello [макс sdf=34.3]ва[/макс] ывап[/m]
   [b]aa[/b]
   [i]aa[/i]
