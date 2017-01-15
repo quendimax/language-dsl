@@ -18,7 +18,7 @@ patterns: [
     include: '#escapes'
   }
   {
-    include: '#tags'
+    include: '#mildTags'
   }
   {
     include: '#references'
@@ -113,6 +113,10 @@ repository:
       }
     ]
 
+  numbers:
+    match: '\\b(\\d+\\.?\\d*)\\b'
+    name: 'constant.numeric.dsl'
+
   escapes:
     match: '(\\\\.|\\[\\[|\\]\\])'
     name: 'constant.character.escape.dsl'
@@ -124,6 +128,10 @@ repository:
         name: 'entity.other.attribute-name.dsl'
       2:
         name: 'punctuation.definition.tag.dsl'
+
+  attributeConstants:
+    match: '\\s+(\\w+)\\b'
+    name: 'constant.other.dsl'
 
   comments:
     begin: '\\{\\{'
@@ -138,15 +146,17 @@ repository:
 
   # #dslTags mark as tags supported by GoldenDict DSL tags, the other are marked
   # as invalid tags
-  dslTags:
+  strictTags:
     patterns: [
       # correct DSL tags
       {
-        begin: '(\\[)\\s*(/?(b|i|u|c|\\*|m\\d?|trn|ex|com|s|url|!trs|p|\'|lang|ref|@|sub|sup|t|br))'
+        begin: '(\\[)\\s*(/?)(\\*|\'|@|m\\d?\\b|trn\\b|ex\\b|com\\b|url\\b|!trs\\b|lang\\b|ref\\b|sub\\b|sup\\b|br\\b|t\\b|b\\b|i\\b|u\\b|c\\b|s\\b|p\\b)'
         beginCaptures:
           1:
             name: 'entity.name.tag.dsl'
           2:
+            name: 'entity.name.tag.dsl'
+          3:
             name: 'entity.name.tag.dsl'
         end: '\\]'
         endCaptures:
@@ -159,13 +169,23 @@ repository:
           {
             include: '#strings'
           }
+          {
+            include: '#numbers'
+          }
+          {
+            include: '#attributeConstants'
+          }
         ]
       }
       # incorrect DSL tags
       {
-        begin: '\\[\\s*/?[^_a-zA-Z0-9\\s\\]]+'
+        begin: '(\\[)\\s*(/?)(?!\\*|\'|@|m\\d?\\b|trn\\b|ex\\b|com\\b|url\\b|!trs\\b|lang\\b|ref\\b|sub\\b|sup\\b|br\\b|t\\b|b\\b|i\\b|u\\b|c\\b|s\\b|p\\b)'
         beginCaptures:
-          0:
+          1:
+            name: 'invalid.illegal.dsl'
+          2:
+            name: 'invalid.illegal.dsl'
+          3:
             name: 'invalid.illegal.dsl'
         end: '\\]'
         endCaptures:
@@ -179,30 +199,42 @@ repository:
           {
             include: '#strings'
           }
+          {
+            include: '#numbers'
+          }
+          {
+            include: '#attributeConstants'
+          }
         ]
       }
     ]
 
   # this #tags marks every tag, even if the tag is not supported by GoldenDict
-  tags:
+  mildTags:
     begin: '(\\[)\\s*(/?)([^\\s\\]]+)'
     beginCaptures:
       1:
-        name: 'punctuation.definition.tag.dsl'
+        name: 'entity.name.tag.dsl'
       2:
-        name: 'punctuation.definition.tag.dsl'
+        name: 'entity.name.tag.dsl'
       3:
         name: 'entity.name.tag.dsl'
     end: '\\]'
     endCaptures:
       0:
-        name: 'punctuation.definition.tag.dsl'
+        name: 'entity.name.tag.dsl'
     patterns: [
       {
         include: '#attributes'
       }
       {
         include: '#strings'
+      }
+      {
+        include: '#numbers'
+      }
+      {
+        include: '#attributeConstants'
       }
     ]
 
