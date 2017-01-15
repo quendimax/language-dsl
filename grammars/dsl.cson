@@ -6,170 +6,221 @@ patterns: [
     match: '^[\\ \\t]*$'
   }
   {
-    include: '#macro'
+    include: '#macros'
   }
   {
-    include: '#comment'
+    include: '#comments'
   }
   {
-    include: '#index'
+    include: '#indices'
   }
   {
-    include: '#escape'
+    include: '#escapes'
   }
   {
-    include: '#tag'
+    include: '#tags'
   }
-  # {
-  #   include: '#invalidTag'
-  # }
+  {
+    include: '#references'
+  }
 ]
 
 repository:
 
-  macro:
+  macros:
     begin: '^#(NAME|INDEX_LANGUAGE|CONTENTS_LANGUAGE|INCLUDE|SOURCE_CODE_PAGE)'
     beginCaptures:
-      '0':
+      0:
         name: 'keyword.other.dsl'
     end: '$'
     patterns: [
       {
-        include: '#string'
+        include: '#strings'
       }
     ]
 
-  index:
+  indices:
     patterns: [
       {
-        include: '#escapeAndIndex'
+        include: '#escapeAndIndices'
       }
       {
-        include: '#justIndex'
+        include: '#justIndices'
       }
       {
-        include: '#subIndex'
+        include: '#subIndices'
       }
     ]
 
-  justIndex:
+  justIndices:
     begin: '^[^\\ \\t]'
     end: '$'
     name: 'markup.bold.dsl'
     patterns: [
       {
-        include: '#comment'
+        include: '#comments'
       }
       {
-        include: '#escape'
+        include: '#escapes'
       }
     ]
 
-  escapeAndIndex:
+  escapeAndIndices:
     begin: '^\\\\.'
     beginCaptures:
-      '0':
+      0:
         name: 'constant.character.escape.dsl'
     end: '$'
     name: 'markup.bold.dsl'
     patterns: [
       {
-        include: '#comment'
+        include: '#comments'
       }
       {
-        include: '#escape'
+        include: '#escapes'
       }
     ]
 
-  subIndex:
+  subIndices:
     begin: '^[\\ \\t]+(@)'
     beginCaptures:
-      '1':
+      1:
         name: 'keyword.other.dsl'
     end: '$'
     name: 'markup.bold.dsl'
     patterns: [
       {
-        include: '#comment'
+        include: '#comments'
       }
       {
-        include: '#escape'
+        include: '#escapes'
       }
     ]
 
-  string:
+  strings:
     begin: '"'
     beginCaptures:
-      '0':
+      0:
         name: 'punctuation.definition.string.begin.dsl'
     end: '"'
     endCaptures:
-      '0':
+      0:
         name: 'punctuation.definition.string.end.dsl'
     name: 'string.quoted.double.dsl'
     patterns: [
       {
-        include: '#escape'
+        include: '#escapes'
       }
     ]
 
-  escape:
+  escapes:
     match: '(\\\\.|\\[\\[|\\]\\])'
     name: 'constant.character.escape.dsl'
 
-  attribute:
+  attributes:
     match: '\\s+(\\w+)(=)'
     'captures':
-      '1':
+      1:
         name: 'entity.other.attribute-name.dsl'
-      '2':
+      2:
         name: 'punctuation.definition.tag.dsl'
 
-  comment:
+  comments:
     begin: '\\{\\{'
     beginCaptures:
-      '0':
+      0:
         name: 'punctuation.definition.comment.begin.dsl'
     end: '\\}\\}'
     endCaptures:
-      '0':
+      0:
         name: 'punctuation.definition.comment.end.dsl'
     name: 'comment.block.dsl'
 
-  tag:
-    begin: '(\\[)\\s*(/?(b|i|u|c|\\*|m\\d?|trn|ex|com|s|url|!trs|p|\'|lang|ref|@|sub|sup|t|br))'
-    beginCaptures:
-      '1':
-        name: 'entity.name.tag.dsl'
-      '2':
-        name: 'entity.name.tag.dsl'
-    end: '\\]'
-    endCaptures:
-      '0':
-        name: 'entity.name.tag.dsl'
+  # #dslTags mark as tags supported by GoldenDict DSL tags, the other are marked
+  # as invalid tags
+  dslTags:
     patterns: [
+      # correct DSL tags
       {
-        include: '#attribute'
+        begin: '(\\[)\\s*(/?(b|i|u|c|\\*|m\\d?|trn|ex|com|s|url|!trs|p|\'|lang|ref|@|sub|sup|t|br))'
+        beginCaptures:
+          1:
+            name: 'entity.name.tag.dsl'
+          2:
+            name: 'entity.name.tag.dsl'
+        end: '\\]'
+        endCaptures:
+          0:
+            name: 'entity.name.tag.dsl'
+        patterns: [
+          {
+            include: '#attributes'
+          }
+          {
+            include: '#strings'
+          }
+        ]
       }
+      # incorrect DSL tags
       {
-        include: '#string'
+        begin: '\\[\\s*/?[^_a-zA-Z0-9\\s\\]]+'
+        beginCaptures:
+          0:
+            name: 'invalid.illegal.dsl'
+        end: '\\]'
+        endCaptures:
+          0:
+            name: 'invalid.illegal.dsl'
+        name: 'invalid.illegal.dsl'
+        patterns: [
+          {
+            include: '#attributes'
+          }
+          {
+            include: '#strings'
+          }
+        ]
       }
     ]
 
-  invalidTag:
-    begin: '\\[\\s*/?\\w+'
+  # this #tags marks every tag, even if the tag is not supported by GoldenDict
+  tags:
+    begin: '(\\[)\\s*(/?)([^\\s\\]]+)'
     beginCaptures:
-      '0':
-        name: 'invalid.illegal.dsl'
-    end: '\\'
+      1:
+        name: 'punctuation.definition.tag.dsl'
+      2:
+        name: 'punctuation.definition.tag.dsl'
+      3:
+        name: 'entity.name.tag.dsl'
+    end: '\\]'
     endCaptures:
-      '0':
-        name: 'invalid.illegal.dsl'
+      0:
+        name: 'punctuation.definition.tag.dsl'
     patterns: [
       {
-        include: '#attribute'
+        include: '#attributes'
       }
       {
-        include: '#string'
+        include: '#strings'
+      }
+    ]
+
+  references:
+    begin: '<<'
+    beginCaptures:
+      0:
+        name: 'punctuation.definition.link.begin.dsl'
+    end: '>>'
+    endCaptures:
+      0:
+        name: 'punctuation.definition.link.end.dsl'
+    name: 'markup.underline.link.dsl'
+    patterns: [
+      {
+        include: '#escapes'
+      }
+      {
+        include: '#comments'
       }
     ]

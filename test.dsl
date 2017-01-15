@@ -1,4 +1,4 @@
-#NAME "Test dictionary"
+﻿#NAME "Test dictionary"
 #INDEX_LANGUAGE "Belarusian"
 
 #CONTENTS_LANGUAGE "English"
@@ -26,8 +26,13 @@ bye
   @{{sdf}}bye-bye
   [sdf]asd[/sdf]
   [m3]hell[']o[/'][/m3]
+  <<sdf>> <<{{sdf}}\>>> <<>>
+  [ref]sdf[/ref]
 
 {to }be
   byc'
   [']a[/']
   [*][m1][/m]
+
+tag
+  [m1]hello [макс]ва[/макс] ывап[/m]
