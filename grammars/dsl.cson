@@ -258,6 +258,9 @@ repository:
       {
         include: '#comments'
       }
+      {
+        include: '#mildTags'
+      }
     ]
 
   tilde:
