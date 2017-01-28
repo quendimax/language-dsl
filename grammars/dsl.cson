@@ -156,15 +156,15 @@ repository:
         begin: '(\\[)\\s*(/?)(\\*|\'|@|m\\d?\\b|trn\\b|ex\\b|com\\b|url\\b|!trs\\b|lang\\b|ref\\b|sub\\b|sup\\b|br\\b|t\\b|b\\b|i\\b|u\\b|c\\b|s\\b|p\\b)'
         beginCaptures:
           1:
-            name: 'entity.name.tag.dsl'
+            name: 'punctuation.definition.tag.dsl'
           2:
-            name: 'entity.name.tag.dsl'
+            name: 'punctuation.definition.tag.dsl'
           3:
             name: 'entity.name.tag.dsl'
         end: '\\]'
         endCaptures:
           0:
-            name: 'entity.name.tag.dsl'
+            name: 'punctuation.definition.tag.dsl'
         patterns: [
           {
             include: '#attributes'
@@ -217,15 +217,15 @@ repository:
     begin: '(\\[)\\s*(/?)([^\\s\\]]+)'
     beginCaptures:
       1:
-        name: 'entity.name.tag.dsl'
+        name: 'punctuation.definition.tag.dsl'
       2:
-        name: 'entity.name.tag.dsl'
+        name: 'punctuation.definition.tag.dsl'
       3:
         name: 'entity.name.tag.dsl'
     end: '\\]'
     endCaptures:
       0:
-        name: 'entity.name.tag.dsl'
+        name: 'punctuation.definition.tag.dsl'
     patterns: [
       {
         include: '#attributes'
