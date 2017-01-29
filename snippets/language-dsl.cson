@@ -41,7 +41,7 @@
   '[p]':
     'prefix': 'p'
     'body': '[p]$1[/p]$2'
-  '[ref]'
+  '[ref]':
     'prefix': 'ref'
     'body': '[ref]$1[/ref]$2'
   '<<>>':
