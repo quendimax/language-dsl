@@ -41,9 +41,39 @@
   '[p]':
     'prefix': 'p'
     'body': '[p]$1[/p]$2'
+  '[u]':
+    'prefix': 'u'
+    'body': '[u]$1[/u]$2'
+  '[s]':
+    'prefix': 's'
+    'body': '[s]$1[/s]$2'
   '[ref]':
     'prefix': 'ref'
     'body': '[ref]$1[/ref]$2'
   '<<>>':
     'prefix': '<<'
     'body': '<<$1>>$2'
+  '[ex]':
+    'prefix': 'ex'
+    'body': '[ex]$1[/ex]$2'
+  '[sup]':
+    'prefix': 'sup'
+    'body': '[sup]$1[/sup]$2'
+  '[sub]':
+    'prefix': 'sub'
+    'body': '[sub]$1[/sub]$2'
+  '[trn]':
+    'prefix': 'trn'
+    'body': '[trnu]$1[/trn]$2'
+  '[com]':
+    'prefix': 'com'
+    'body': '[com]$1[/com]$2'
+  '[url]':
+    'prefix': 'url'
+    'body': '[url]$1[/url]$2'
+  '[lang]':
+    'prefix': 'lang'
+    'body': '[lang]$1[/lang]$2'
+  '[*]':
+    'prefix': '*'
+    'body': '[*]$1[/*]$2'

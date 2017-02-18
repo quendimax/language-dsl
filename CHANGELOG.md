@@ -1,3 +1,9 @@
+## 0.2.2
+* Update snippets.
+
+## 0.2.1
+* Fix snippets.
+
 ## 0.2.0
 * Add snippets.
 * Improve text parsing.
