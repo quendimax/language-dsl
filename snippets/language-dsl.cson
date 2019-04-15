@@ -64,7 +64,7 @@
     'body': '[sub]$1[/sub]$2'
   '[trn]':
     'prefix': 'trn'
-    'body': '[trnu]$1[/trn]$2'
+    'body': '[trn]$1[/trn]$2'
   '[com]':
     'prefix': 'com'
     'body': '[com]$1[/com]$2'

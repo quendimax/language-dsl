@@ -31,7 +31,7 @@ patterns: [
 repository:
 
   macros:
-    begin: '^#(NAME|INDEX_LANGUAGE|CONTENTS_LANGUAGE|INCLUDE|SOURCE_CODE_PAGE)'
+    begin: '^\ufeff?#(NAME|INDEX_LANGUAGE|CONTENTS_LANGUAGE|INCLUDE|SOURCE_CODE_PAGE)'
     beginCaptures:
       0:
         name: 'keyword.other.dsl'
